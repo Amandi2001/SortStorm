@@ -1,7 +1,7 @@
+//Insertion Sort
 
-public class SortingAlgorithms {
 
-    public static Double[] insertionSort(Double[] arr) {
+public static Double[] insertionSort(Double[] arr) {
         Double[] a = arr.clone();
 
         for (int i = 1; i < a.length; i++) {
@@ -15,8 +15,8 @@ public class SortingAlgorithms {
         }
         return a;
     }
-
-    public static Double[] shellSort(Double[] arr) {
+//Shell Sort
+public static Double[] shellSort(Double[] arr) {
         Double[] a = arr.clone();
         int n = a.length;
 
@@ -33,4 +33,3 @@ public class SortingAlgorithms {
 
         return a;
     }
-}
