@@ -108,4 +108,39 @@ public class SortingAlgorithms {
 
         return i + 1;
     }
+
+    public static Double[] heapSort(Double[] arr) {
+        Double[] a = arr.clone();
+        int n = a.length;
+
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(a, n, i);
+
+        for (int i = n - 1; i >= 0; i--) {
+            double temp = a[0];
+            a[0] = a[i];
+            a[i] = temp;
+
+            heapify(a, i, 0);
+        }
+
+        return a;
+    }
+
+    private static void heapify(Double[] a, int n, int i) {
+        int largest = i;
+        int l = 2 * i + 1, r = 2 * i + 2;
+
+        if (l < n && a[l] > a[largest]) largest = l;
+        if (r < n && a[r] > a[largest]) largest = r;
+
+        if (largest != i) {
+            double swap = a[i];
+            a[i] = a[largest];
+            a[largest] = swap;
+
+            heapify(a, n, largest);
+        }
+    }
+
 }
