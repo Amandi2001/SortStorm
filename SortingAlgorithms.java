@@ -15,4 +15,22 @@ public class SortingAlgorithms {
         }
         return a;
     }
+
+    public static Double[] shellSort(Double[] arr) {
+        Double[] a = arr.clone();
+        int n = a.length;
+
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i++) {
+                double temp = a[i];
+                int j;
+                for (j = i; j >= gap && a[j - gap] > temp; j -= gap) {
+                    a[j] = a[j - gap];
+                }
+                a[j] = temp;
+            }
+        }
+
+        return a;
+    }
 }
