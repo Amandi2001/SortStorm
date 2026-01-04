@@ -1,5 +1,7 @@
 public class SortingAlgorithms {
 
+    //Merge sort
+
         public static Double[] mergeSort(Double[] arr) {
         Double[] a = arr.clone();
         mergeSortRec(a, 0, a.length - 1);
@@ -34,4 +36,37 @@ public class SortingAlgorithms {
         while (j < n2) a[k++] = R[j++];
     }
 
+    //Quick sort
+
+    public static Double[] quickSort(Double[] arr) {
+        Double[] a = arr.clone();
+        quick(a, 0, a.length - 1);
+        return a;
+    }
+
+    private static void quick(Double[] a, int low, int high) {
+        if (low < high) {
+            int pi = partition(a, low, high);
+            quick(a, low, pi - 1);
+            quick(a, pi + 1, high);
+        }
+    }
+
+        private static int partition(Double[] a, int low, int high) {
+        double pivot = a[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (a[j] < pivot) {
+                i++;
+                double t = a[i]; a[i] = a[j]; a[j] = t;
+            }
+        }
+
+        double t = a[i + 1];
+        a[i + 1] = a[high];
+        a[high] = t;
+
+        return i + 1;
+    }
 }
