@@ -27,10 +27,6 @@ public class CSVLoader {
 
     }
 
-    public String[] getHeaders() {
-        return headers;
-    }
-
     public Double[] getNumericColumn(int index) throws Exception {
         List<Double> nums = new ArrayList<>();
 
