@@ -39,27 +39,27 @@ public class SortingAlgorithms {
     //Quick sort
 
     public static Double[] quickSort(Double[] arr) {
-        Double[] a = arr.clone();
-        quick(a, 0, a.length - 1);
+        Double[] a = arr.clone(); // Clone the input array
+        quick(a, 0, a.length - 1); // Recursive quick sort
         return a;
     }
 
     private static void quick(Double[] a, int low, int high) {
         if (low < high) {
-            int pi = partition(a, low, high);
-            quick(a, low, pi - 1);
-            quick(a, pi + 1, high);
+            int pi = partition(a, low, high); // Partition the array
+            quick(a, low, pi - 1); // Sort left part
+            quick(a, pi + 1, high); // Sort right part
         }
     }
 
         private static int partition(Double[] a, int low, int high) {
-        double pivot = a[high];
+        double pivot = a[high]; // Choose last element as pivot
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
             if (a[j] < pivot) {
                 i++;
-                double t = a[i]; a[i] = a[j]; a[j] = t;
+                double t = a[i]; a[i] = a[j]; a[j] = t; // Swap
             }
         }
 
@@ -67,6 +67,6 @@ public class SortingAlgorithms {
         a[i + 1] = a[high];
         a[high] = t;
 
-        return i + 1;
+        return i + 1; // Return pivot index
     }
 }
