@@ -5,7 +5,16 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public SortAppUI() {
+public class SortAppUI extends JFrame {
+
+    private final CSVLoader loader = new CSVLoader();
+    private JComboBox<String> columnBox;
+    private JTextArea resultArea;
+
+    private Map<String, Long> times = new LinkedHashMap<>();
+    private ChartPanel chartPanel;
+
+    public SortAppUI() {
 
         setTitle("CSV Sorting Performance Visualizer");
         setSize(900, 650);
@@ -58,6 +67,13 @@ public SortAppUI() {
         setVisible(true);
     }
 
+     private void styleButton(JButton btn){
+        btn.setBackground(new Color(255, 140, 0));
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(5,15,5,15));
+    }
+
     private void loadCSV() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -84,6 +100,30 @@ public SortAppUI() {
             int index = columnBox.getSelectedIndex();
             Double[] data = loader.getNumericColumn(index);
 
+             times.clear();
+
+            long start;
+
+            start = System.nanoTime();
+            SortingAlgorithms.insertionSort(data);
+            times.put("Insertion Sort", System.nanoTime() - start);
+
+            start = System.nanoTime();
+            SortingAlgorithms.shellSort(data);
+            times.put("Shell Sort", System.nanoTime() - start);
+
+            start = System.nanoTime();
+            SortingAlgorithms.mergeSort(data);
+            times.put("Merge Sort", System.nanoTime() - start);
+
+            start = System.nanoTime();
+            SortingAlgorithms.quickSort(data);
+            times.put("Quick Sort", System.nanoTime() - start);
+
+            start = System.nanoTime();
+            SortingAlgorithms.heapSort(data);
+            times.put("Heap Sort", System.nanoTime() - start);
+
 
             resultArea.setText("");
 
@@ -109,3 +149,70 @@ public SortAppUI() {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
+
+    class ChartPanel extends JPanel {
+
+        public ChartPanel(){
+            setBackground(Color.WHITE);
+            setPreferredSize(new Dimension(300,300));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            if(times.isEmpty()) return;
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            long max = times.values().stream().mapToLong(v -> v).max().getAsLong();
+
+            int x = 60;
+            int barWidth = 90;
+            int gap = 30;
+
+            int base = height - 60;
+
+            Font font = new Font("Arial", Font.BOLD, 12);
+            g2.setFont(font);
+
+            Color[] colors = {
+                    new Color(255, 99, 71),
+                    new Color(60, 179, 113),
+                    new Color(65, 105, 225),
+                    new Color(238, 130, 238),
+                    new Color(255, 215, 0)
+            };
+
+            int i = 0;
+
+            for(String key : times.keySet()){
+
+                long v = times.get(key);
+
+                int barHeight = (int)((double)v / max * (height-120));
+
+                g2.setColor(colors[i % colors.length]);
+                g2.fillRoundRect(x, base - barHeight, barWidth, barHeight, 15,15);
+
+                g2.setColor(Color.BLACK);
+                g2.drawRoundRect(x, base - barHeight, barWidth, barHeight, 15,15);
+
+                String label = key;
+
+                g2.drawString(label, x, base + 20);
+
+                String timeText = String.format("%.2f ms", v / 1_000_000.0);
+                g2.drawString(timeText, x, base - barHeight - 10);
+
+                x += barWidth + gap;
+                i++;
+            }
+        }
+    }
+}
