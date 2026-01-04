@@ -3,17 +3,17 @@ public class SortingAlgorithms {
     //Merge sort
 
         public static Double[] mergeSort(Double[] arr) {
-        Double[] a = arr.clone();
-        mergeSortRec(a, 0, a.length - 1);
+        Double[] a = arr.clone();  // Clone the input array
+        mergeSortRec(a, 0, a.length - 1); // Recursive merge sort
         return a;
     }
 
     private static void mergeSortRec(Double[] a, int l, int r) {
         if (l < r) {
-            int m = (l + r) / 2;
-            mergeSortRec(a, l, m);
-            mergeSortRec(a, m + 1, r);
-            merge(a, l, m, r);
+            int m = (l + r) / 2; // Find the middle index
+            mergeSortRec(a, l, m);  // Sort left half
+            mergeSortRec(a, m + 1, r); // Sort right half
+            merge(a, l, m, r);  // Merge sorted halves
         }
     }
 
@@ -36,6 +36,7 @@ public class SortingAlgorithms {
         while (j < n2) a[k++] = R[j++];
     }
 
+    
     //Quick sort
 
     public static Double[] quickSort(Double[] arr) {
