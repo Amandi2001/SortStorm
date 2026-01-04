@@ -1,10 +1,3 @@
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -66,6 +59,26 @@ public class SortingAlgorithms {
         add(split, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+        private void loadCSV() {
+        JFileChooser chooser = new JFileChooser();
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                loader.loadCSV(chooser.getSelectedFile());
+                columnBox.removeAllItems();
+
+                for (String h : loader.getHeaders())
+                    columnBox.addItem(h);
+
+                resultArea.setText("CSV Loaded Successfully!\nSelect a numeric column.\n");
+                times.clear();
+                chartPanel.repaint();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }
 
 }
