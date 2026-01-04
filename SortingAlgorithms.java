@@ -1,6 +1,17 @@
+//Insertion Sort
+public static Double[] insertionSort(Double[] arr) {
+        Double[] a = arr.clone();
 
-public class SortingAlgorithms {
-
+        for (int i = 1; i < a.length; i++) {
+            double key = a[i];
+            int j = i - 1;
+            while (j >= 0 && a[j] > key) {
+                a[j + 1] = a[j];
+                j--;
+            }
+            a[j + 1] = key;
+          
+          
     //Merge sort
 
         public static Double[] mergeSort(Double[] arr) {
@@ -45,6 +56,19 @@ public class SortingAlgorithms {
         quick(a, 0, a.length - 1); // Recursive quick sort
         return a;
     }
+//Shell Sort
+public static Double[] shellSort(Double[] arr) {
+        Double[] a = arr.clone();
+        int n = a.length;
+
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i++) {
+                double temp = a[i];
+                int j;
+                for (j = i; j >= gap && a[j - gap] > temp; j -= gap) {
+                    a[j] = a[j - gap];
+                }
+                a[j] = temp;
 
     private static void quick(Double[] a, int low, int high) {
         if (low < high) {
@@ -71,4 +95,3 @@ public class SortingAlgorithms {
 
         return i + 1; // Return pivot index
     }
-}
