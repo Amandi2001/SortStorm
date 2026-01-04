@@ -11,12 +11,11 @@ public class CSVLoader {
         rows.clear();
 
         BufferedReader br = new BufferedReader(new FileReader(file));
-        String line = br.readLine();
 
+        String line = br.readLine();
         if (line == null) {
             throw new Exception("Empty CSV File");
         }
-
         headers = line.split(",");
 
         while ((line = br.readLine()) != null) {
@@ -25,6 +24,10 @@ public class CSVLoader {
 
         br.close();
 
+    }
+
+    public String[] getHeaders() {
+        return headers;
     }
 
     public Double[] getNumericColumn(int index) throws Exception {
