@@ -77,3 +77,35 @@ public SortAppUI() {
             }
         }
     }
+
+    private void runSorting() {
+
+        try {
+            int index = columnBox.getSelectedIndex();
+            Double[] data = loader.getNumericColumn(index);
+
+
+            resultArea.setText("");
+
+            String best = null;
+            long bestTime = Long.MAX_VALUE;
+
+            for (String alg : times.keySet()) {
+                long t = times.get(alg);
+                resultArea.append(String.format("%-15s = %.4f ms\n",
+                        alg, t / 1_000_000.0));
+
+                if (t < bestTime) {
+                    bestTime = t;
+                    best = alg;
+                }
+            }
+
+            resultArea.append("\nFastest Algorithm: " + best);
+
+            chartPanel.repaint();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
