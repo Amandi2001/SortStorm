@@ -57,3 +57,23 @@ public SortAppUI() {
 
         setVisible(true);
     }
+
+    private void loadCSV() {
+        JFileChooser chooser = new JFileChooser();
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                loader.loadCSV(chooser.getSelectedFile());
+                columnBox.removeAllItems();
+
+                for (String h : loader.getHeaders())
+                    columnBox.addItem(h);
+
+                resultArea.setText("CSV Loaded Successfully!\nSelect a numeric column.\n");
+                times.clear();
+                chartPanel.repaint();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
+    }
